@@ -1,23 +1,40 @@
 import { db } from './firebase-config.js';
-import { ref, onValue } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+import { ref, onValue } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js';
 
 const blogList = document.getElementById('blogList');
 const blogsRef = ref(db, 'blogs');
 
 onValue(blogsRef, (snapshot) => {
-  blogList.innerHTML = '';
-  snapshot.forEach((child) => {
-    const data = child.val();
-    const card = `
-      <div class="col-md-4 mb-4">
+  const data = snapshot.val();
+  if (!data) {
+    blogList.innerHTML = `<p class="text-muted">Belum ada blog.</p>`;
+    return;
+  }
+
+  let html = '';
+  for (const key in data) {
+    const blog = data[key];
+    const date = new Date(blog.timestamp).toLocaleString();
+    html += `
+      <div class="col-md-6 mb-4">
         <div class="card shadow-sm h-100">
-          <img src="${data.imageUrl}" class="card-img-top" style="object-fit:cover; height:200px;" />
-          <div class="card-body">
-            <h5 class="card-title">${data.title}</h5>
-            <p class="card-text">${data.content.slice(0, 100)}...</p>
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">${escapeHtml(blog.title)}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">${date}</h6>
+            <p class="card-text flex-grow-1">${escapeHtml(blog.content)}</p>
           </div>
         </div>
-      </div>`;
-    blogList.innerHTML += card;
-  });
+      </div>
+    `;
+  }
+  blogList.innerHTML = html;
 });
+
+function escapeHtml(text) {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
