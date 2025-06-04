@@ -1,9 +1,22 @@
+export const config = {
+  runtime: 'edge',
+};
+
 export default async function handler(req) {
-  const { rfid } = await req.json();
-  const allowedRFIDs = ['0006351492', 'Fizzx'];
+  if (req.method !== 'POST') {
+    return new Response(JSON.stringify({ success: false, message: 'Method not allowed' }), {
+      status: 405,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  const body = await req.json();
+  const { rfid } = body;
+
+  const allowedRFIDs = ['1234567890', 'adminrfid001'];
 
   const valid = allowedRFIDs.includes(rfid);
   return new Response(JSON.stringify({ success: valid }), {
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json' },
   });
 }
