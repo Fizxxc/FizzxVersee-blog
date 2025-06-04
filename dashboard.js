@@ -1,5 +1,6 @@
 // dashboard.js
-import { db, ref, push } from './firebase-config.js'; // Pastikan ini sudah export dengan benar
+import { db } from './firebase-config.js';
+import { ref, push } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js';
 import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@11/+esm';
 
 document.getElementById('blogForm').addEventListener('submit', async (e) => {
