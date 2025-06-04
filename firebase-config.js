@@ -1,17 +1,19 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getDatabase } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
-import { getStorage } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getDatabase } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCsp_hLW1819Wc5B6zA1TBtWYc-tdXIzu8",
-  authDomain: "online-order-a6d5d.firebaseapp.com",
-  projectId: "online-order-a6d5d",
-  storageBucket: "online-order-a6d5d.firebasestorage.app",
-  messagingSenderId: "663336912583",
-  appId: "1:663336912583:web:e14d5e73d25e068a05e0e2",
-  databaseURL: "https://console.firebase.google.com/project/online-order-a6d5d/database/online-order-a6d5d-default-rtdb/data/~2F?hl=id"
+  apiKey: "AIzaSyDpv9uvfdUPKnyBKESB2fDEUwuDn9Nzmtg",
+  authDomain: "orderr-625c2.firebaseapp.com",
+  databaseURL: "https://orderr-625c2-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "orderr-625c2",
+  storageBucket: "orderr-625c2.firebasestorage.app",
+  messagingSenderId: "891679772111",
+  appId: "1:891679772111:web:1b5999b967bd17c87356ba",
+  measurementId: "G-06W3BTP7HH"
 };
 
+
 const app = initializeApp(firebaseConfig);
-export const db = getDatabase(app);
-export const storage = getStorage(app);
+const db = getDatabase(app);
+
+export { db };
