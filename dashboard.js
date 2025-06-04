@@ -40,3 +40,8 @@ document.getElementById('blogForm').addEventListener('submit', async (e) => {
     Swal.fire('Error', 'Gagal menambahkan blog: ' + error.message, 'error');
   }
 });
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  localStorage.removeItem('admin');
+  window.location.href = '/login.html';
+});
