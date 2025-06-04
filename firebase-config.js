@@ -7,6 +7,7 @@ import { getStorage } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-s
   const firebaseConfig = {
     apiKey: "AIzaSyCsp_hLW1819Wc5B6zA1TBtWYc-tdXIzu8",
     authDomain: "online-order-a6d5d.firebaseapp.com",
+    databaseURL: "https://online-order-a6d5d-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "online-order-a6d5d",
     storageBucket: "online-order-a6d5d.appspot.app",
     messagingSenderId: "663336912583",
