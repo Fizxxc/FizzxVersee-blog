@@ -4,45 +4,28 @@ import { ref as sRef, uploadBytes, getDownloadURL } from 'https://www.gstatic.co
 
 document.getElementById('blogForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-
   const title = document.getElementById('title').value;
   const content = document.getElementById('content').value;
   const image = document.getElementById('image').files[0];
 
-  if (!image) {
-    Swal.fire('Gagal', 'Silakan pilih gambar terlebih dahulu.', 'error');
-    return;
-  }
-
   Swal.fire({ title: 'Mengupload...', didOpen: () => Swal.showLoading() });
 
-  try {
-    // Bersihkan nama file dari karakter aneh
-    const cleanName = image.name.replace(/[^\w.]+/g, '_');
-    const filename = Date.now() + '-' + cleanName;
+  // Bersihkan nama file dari karakter khusus, agar tidak error
+  const cleanName = image.name.replace(/[^\w.-]/g, '_');
 
-    // Buat referensi file
-    const imageRef = sRef(storage, 'blog-images/' + filename);
+  // Buat reference dengan nama unik
+  const imageRef = sRef(storage, 'blog-images/' + Date.now() + '-' + cleanName);
 
-    // Upload file ke Firebase Storage
-    await uploadBytes(imageRef, image);
+  // Upload file
+  await uploadBytes(imageRef, image);
 
-    // Ambil URL download
-    const imageUrl = await getDownloadURL(imageRef);
+  // Ambil URL akses file
+  const imageUrl = await getDownloadURL(imageRef);
 
-    // Simpan data ke Realtime Database
-    const blogRef = ref(db, 'blogs');
-    await push(blogRef, {
-      title,
-      content,
-      imageUrl,
-      timestamp: Date.now(),
-    });
+  // Simpan data blog ke Realtime Database
+  const blogRef = ref(db, 'blogs');
+  await push(blogRef, { title, content, imageUrl, timestamp: Date.now() });
 
-    Swal.fire('Sukses', 'Blog berhasil ditambahkan!', 'success');
-    document.getElementById('blogForm').reset();
-  } catch (error) {
-    console.error('Upload error:', error);
-    Swal.fire('Gagal', error.message, 'error');
-  }
+  Swal.fire('Sukses', 'Blog berhasil ditambahkan!', 'success');
+  document.getElementById('blogForm').reset();
 });
