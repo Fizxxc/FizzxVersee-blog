@@ -1,7 +1,9 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getDatabase } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+import { getStorage } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js'; // ✅ tambahkan ini
 
 const firebaseConfig = {
+
   apiKey: "AIzaSyDpv9uvfdUPKnyBKESB2fDEUwuDn9Nzmtg",
   authDomain: "orderr-625c2.firebaseapp.com",
   databaseURL: "https://orderr-625c2-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -13,7 +15,9 @@ const firebaseConfig = {
 };
 
 
+
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const storage = getStorage(app); // ✅ inisialisasi storage
 
-export { db };
+export { db, storage }; // ✅ ekspor storage
