@@ -1,6 +1,6 @@
 import { db, storage } from './firebase-config.js';
-import { ref, push } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
-import { ref as sRef, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
+import { ref, push } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js';
+import { ref as sRef, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-storage.js';
 
 document.getElementById('blogForm').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -14,7 +14,8 @@ document.getElementById('blogForm').addEventListener('submit', async (e) => {
   await uploadBytes(imageRef, image);
   const imageUrl = await getDownloadURL(imageRef);
 
-  await push(ref(db, 'blogs'), { title, content, imageUrl, timestamp: Date.now() });
+  const blogRef = ref(db, 'blogs');
+  await push(blogRef, { title, content, imageUrl, timestamp: Date.now() });
 
   Swal.fire('Sukses', 'Blog berhasil ditambahkan!', 'success');
   document.getElementById('blogForm').reset();
