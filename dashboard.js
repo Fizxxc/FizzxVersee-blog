@@ -1,4 +1,7 @@
-// dashboard.js
+if (localStorage.getItem('admin') !== 'true') {
+  window.location.href = '/login'; // redirect paksa
+}
+
 import { db } from './firebase-config.js';
 import { ref, push } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js';
 import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@11/+esm';
