@@ -13,7 +13,7 @@ export default async function handler(req) {
   const body = await req.json();
   const { rfid } = body;
 
-  const allowedRFIDs = ['1234567890', 'adminrfid001'];
+  const allowedRFIDs = ['0006351492', 'Fizzxx'];
 
   const valid = allowedRFIDs.includes(rfid);
   return new Response(JSON.stringify({ success: valid }), {
