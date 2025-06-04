@@ -4,16 +4,17 @@ import { getDatabase } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-
 import { getStorage } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-storage.js";
 
 // Konfigurasi Firebase yang benar
-const firebaseConfig = {
-  apiKey: "AIzaSyDpv9uvfdUPKnyBKESB2fDEUwuDn9Nzmtg",
-  authDomain: "orderr-625c2.firebaseapp.com",
-  databaseURL: "https://orderr-625c2-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "orderr-625c2",
-  storageBucket: "orderr-625c2.appspot.com",
-  messagingSenderId: "891679772111",
-  appId: "1:891679772111:web:1b5999b967bd17c87356ba",
-  measurementId: "G-06W3BTP7HH"
-};
+  const firebaseConfig = {
+    apiKey: "AIzaSyCsp_hLW1819Wc5B6zA1TBtWYc-tdXIzu8",
+    authDomain: "online-order-a6d5d.firebaseapp.com",
+    projectId: "online-order-a6d5d",
+    storageBucket: "online-order-a6d5d.appspot.app",
+    messagingSenderId: "663336912583",
+    appId: "1:663336912583:web:e14d5e73d25e068a05e0e2",
+    measurementId: "G-SNYEZ2VS5N"
+
+  };
+
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
