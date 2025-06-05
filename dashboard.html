@@ -8,22 +8,22 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-light">
- <nav class="navbar navbar-light bg-white p-3 shadow-sm">
-  <div class="container-fluid">
-    <a class="navbar-brand fw-bold" href="#">Dashboard Blog</a>
-    
-    <div class="d-flex ms-auto gap-2">
-      <a href="/" class="btn btn-outline-primary btn-sm">Lihat Publik</a>
-      <button id="logoutBtn" class="btn btn-danger btn-sm">Logout</button>
-    </div>
-  </div>
-</nav>
 
+  <nav class="navbar navbar-light bg-white p-3 shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="#">Dashboard Blog</a>
+      <div class="d-flex ms-auto gap-2">
+        <a href="/" class="btn btn-outline-primary btn-sm">Lihat Publik</a>
+        <button id="logoutBtn" class="btn btn-danger btn-sm">Logout</button>
+      </div>
+    </div>
+  </nav>
 
   <div class="container py-4">
     <h3 class="mb-4">Tambah Blog Baru</h3>
 
     <form id="blogForm" class="mb-4">
+      <input type="hidden" id="blogId" />
       <div class="mb-3">
         <label for="title" class="form-label">Judul</label>
         <input type="text" id="title" class="form-control" placeholder="Masukkan judul blog" required />
@@ -34,8 +34,11 @@
       </div>
       <button type="submit" class="btn btn-primary">Simpan Blog</button>
     </form>
+
+    <hr />
+    <h4 class="mb-3">Daftar Blog</h4>
+    <div id="blogList" class="list-group"></div>
   </div>
-  
 
   <script src="firebase-config.js" type="module"></script>
   <script src="dashboard.js" type="module"></script>
