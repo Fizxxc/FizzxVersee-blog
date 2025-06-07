@@ -48,6 +48,25 @@
     <div id="blogList" class="list-group"></div>
   </div>
 
+  <hr class="my-4">
+<h4>Atur Jadwal Maintenance</h4>
+<form id="maintenanceForm" class="mb-4">
+  <div class="row g-2">
+    <div class="col">
+      <input type="number" id="days" class="form-control" placeholder="Hari" min="0">
+    </div>
+    <div class="col">
+      <input type="number" id="hours" class="form-control" placeholder="Jam" min="0">
+    </div>
+    <div class="col">
+      <input type="number" id="seconds" class="form-control" placeholder="Detik" min="0">
+    </div>
+    <div class="col">
+      <button type="submit" class="btn btn-primary w-100">Setel Maintenance</button>
+    </div>
+  </div>
+</form>
+
   <script src="firebase-config.js" type="module"></script>
   <script src="dashboard.js" type="module"></script>
 </body>
