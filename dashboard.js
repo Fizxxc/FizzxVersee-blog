@@ -37,7 +37,7 @@ blogForm.addEventListener('submit', async (e) => {
   const blogData = {
     title,
     content,
-    categories,
+    category,
     link,
     timestamp: Date.now()
   };
