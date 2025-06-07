@@ -43,26 +43,6 @@
 
   <!-- SweetAlert -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-  <!-- Maintenance Checker -->
-  <script type="module">
-    import { db } from './firebase-config.js';
-    import { ref, onValue } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js';
-
-    const maintenanceRef = ref(db, 'maintenance');
-    onValue(maintenanceRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data?.active) {
-        const { days, hours, seconds } = data.schedule || {};
-        Swal.fire({
-          icon: 'info',
-          title: 'Maintenance Aktif',
-          html: `Halaman sedang dalam pemeliharaan.<br><b>Durasi:</b> ${days || 0} hari, ${hours || 0} jam, ${seconds || 0} detik`,
-          allowOutsideClick: false,
-          showConfirmButton: false
-        });
-      }
-    });
   </script>
 </body>
 </html>
