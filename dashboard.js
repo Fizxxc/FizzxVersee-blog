@@ -119,39 +119,28 @@ const loadBlogs = () => {
         };
 
         // maintance
-        // Maintenance Setup
-const maintenanceForm = document.getElementById('maintenanceForm');
-const daysInput = document.getElementById('days');
-const hoursInput = document.getElementById('hours');
-const secondsInput = document.getElementById('seconds');
+document.getElementById('setMaintenance').addEventListener('click', () => {
+  const days = parseInt(document.getElementById('days').value) || 0;
+  const hours = parseInt(document.getElementById('hours').value) || 0;
+  const seconds = parseInt(document.getElementById('seconds').value) || 0;
+  const message = document.getElementById('message').value || 'Situs sedang dalam perbaikan';
 
-maintenanceForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const days = parseInt(daysInput.value) || 0;
-  const hours = parseInt(hoursInput.value) || 0;
-  const seconds = parseInt(secondsInput.value) || 0;
+  const duration = (days * 86400 + hours * 3600 + seconds); // total detik
+  const endTime = Date.now() + duration * 1000;
 
-  const totalMs = (days * 24 * 60 * 60 + hours * 60 * 60 + seconds) * 1000;
-  const maintenanceTimestamp = Date.now() + totalMs;
+  const maintenanceData = {
+    status: true,
+    message: message,
+    endTime: endTime
+  };
 
-  try {
-    await update(ref(db, 'maintenance'), {
-      days, hours, seconds,
-      timestamp: maintenanceTimestamp
+  set(ref(db, 'maintenance'), maintenanceData)
+    .then(() => {
+      Swal.fire('Berhasil', 'Maintenance berhasil dijadwalkan!', 'success');
+    })
+    .catch((err) => {
+      Swal.fire('Gagal', 'Gagal menyimpan data: ' + err.message, 'error');
     });
-
-    Swal.fire({
-      icon: 'success',
-      title: 'Jadwal Maintenance Disimpan',
-      html: `Halaman akan masuk mode maintenance dalam <b>${days} hari</b>, <b>${hours} jam</b>, <b>${seconds} detik</b>.`,
-      timer: 4000,
-      timerProgressBar: true,
-    });
-
-    maintenanceForm.reset();
-  } catch (err) {
-    Swal.fire('Error', 'Gagal menyimpan jadwal: ' + err.message, 'error');
-  }
 });
 // end maintance
         blogList.appendChild(item);
