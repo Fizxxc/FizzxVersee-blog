@@ -118,6 +118,42 @@ const loadBlogs = () => {
           }
         };
 
+        // maintance
+        // Maintenance Setup
+const maintenanceForm = document.getElementById('maintenanceForm');
+const daysInput = document.getElementById('days');
+const hoursInput = document.getElementById('hours');
+const secondsInput = document.getElementById('seconds');
+
+maintenanceForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const days = parseInt(daysInput.value) || 0;
+  const hours = parseInt(hoursInput.value) || 0;
+  const seconds = parseInt(secondsInput.value) || 0;
+
+  const totalMs = (days * 24 * 60 * 60 + hours * 60 * 60 + seconds) * 1000;
+  const maintenanceTimestamp = Date.now() + totalMs;
+
+  try {
+    await update(ref(db, 'maintenance'), {
+      days, hours, seconds,
+      timestamp: maintenanceTimestamp
+    });
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Jadwal Maintenance Disimpan',
+      html: `Halaman akan masuk mode maintenance dalam <b>${days} hari</b>, <b>${hours} jam</b>, <b>${seconds} detik</b>.`,
+      timer: 4000,
+      timerProgressBar: true,
+    });
+
+    maintenanceForm.reset();
+  } catch (err) {
+    Swal.fire('Error', 'Gagal menyimpan jadwal: ' + err.message, 'error');
+  }
+});
+// end maintance
         blogList.appendChild(item);
       });
   });
