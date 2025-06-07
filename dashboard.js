@@ -8,8 +8,10 @@ import {
   push,
   update,
   remove,
-  onValue
+  onValue,
+  set // ← TAMBAHKAN ini
 } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js';
+
 import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@11/+esm';
 
 // Ambil elemen
@@ -19,7 +21,7 @@ const categoryInput = document.getElementById('category');
 const linkInput = document.getElementById('link');
 const blogIdInput = document.getElementById('blogId');
 const blogList = document.getElementById('blogList');
-const blogForm = document.getElementById('blogForm'); // pastikan ini ada
+const blogForm = document.getElementById('blogForm');
 
 // Tambah/Edit Blog
 blogForm.addEventListener('submit', async (e) => {
@@ -38,7 +40,7 @@ blogForm.addEventListener('submit', async (e) => {
   const blogData = {
     title,
     content,
-    category, // gunakan field "category"
+    category,
     link,
     timestamp: Date.now()
   };
@@ -64,6 +66,31 @@ blogForm.addEventListener('submit', async (e) => {
   } catch (error) {
     Swal.fire('Error', 'Gagal menyimpan blog: ' + error.message, 'error');
   }
+});
+
+// Maintenance handler (dipisahkan supaya tidak nested)
+document.getElementById('setMaintenance').addEventListener('click', () => {
+  const days = parseInt(document.getElementById('days').value) || 0;
+  const hours = parseInt(document.getElementById('hours').value) || 0;
+  const seconds = parseInt(document.getElementById('seconds').value) || 0;
+  const message = document.getElementById('message').value || 'Situs sedang dalam perbaikan';
+
+  const duration = (days * 86400 + hours * 3600 + seconds); // total detik
+  const endTime = Date.now() + duration * 1000;
+
+  const maintenanceData = {
+    status: true,
+    message,
+    endTime
+  };
+
+  set(ref(db, 'maintenance'), maintenanceData)
+    .then(() => {
+      Swal.fire('Berhasil', 'Maintenance berhasil dijadwalkan!', 'success');
+    })
+    .catch((err) => {
+      Swal.fire('Gagal', 'Gagal menyimpan data: ' + err.message, 'error');
+    });
 });
 
 // Tampilkan Blog
@@ -97,7 +124,7 @@ const loadBlogs = () => {
         item.querySelector('.editBtn').onclick = () => {
           titleInput.value = blog.title;
           contentInput.value = blog.content;
-          categoryInput.value = blog.category || ''; // konsisten
+          categoryInput.value = blog.category || '';
           linkInput.value = blog.link || '';
           blogIdInput.value = id;
           window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -118,31 +145,6 @@ const loadBlogs = () => {
           }
         };
 
-        // maintance
-document.getElementById('setMaintenance').addEventListener('click', () => {
-  const days = parseInt(document.getElementById('days').value) || 0;
-  const hours = parseInt(document.getElementById('hours').value) || 0;
-  const seconds = parseInt(document.getElementById('seconds').value) || 0;
-  const message = document.getElementById('message').value || 'Situs sedang dalam perbaikan';
-
-  const duration = (days * 86400 + hours * 3600 + seconds); // total detik
-  const endTime = Date.now() + duration * 1000;
-
-  const maintenanceData = {
-    status: true,
-    message: message,
-    endTime: endTime
-  };
-
-  set(ref(db, 'maintenance'), maintenanceData)
-    .then(() => {
-      Swal.fire('Berhasil', 'Maintenance berhasil dijadwalkan!', 'success');
-    })
-    .catch((err) => {
-      Swal.fire('Gagal', 'Gagal menyimpan data: ' + err.message, 'error');
-    });
-});
-// end maintance
         blogList.appendChild(item);
       });
   });
