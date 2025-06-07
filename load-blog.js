@@ -103,3 +103,34 @@ function escapeHtml(text = '') {
 searchInput.addEventListener('input', () => renderBlogs(true));
 categoryFilter.addEventListener('change', () => renderBlogs(true));
 loadMoreBtn.addEventListener('click', () => renderBlogs());
+
+// Cek status maintenance
+onValue(ref(db, 'maintenance'), (snapshot) => {
+  const data = snapshot.val();
+
+  if (data && data.status === true) {
+    const now = Date.now();
+    if (now < data.endTime) {
+      const timeLeft = data.endTime - now;
+      const seconds = Math.floor((timeLeft / 1000) % 60);
+      const minutes = Math.floor((timeLeft / 1000 / 60) % 60);
+      const hours = Math.floor((timeLeft / 1000 / 60 / 60) % 24);
+      const days = Math.floor((timeLeft / 1000 / 60 / 60 / 24));
+
+      const countdownText = `${days} hari, ${hours} jam, ${minutes} menit, ${seconds} detik`;
+
+      Swal.fire({
+        icon: 'info',
+        title: 'Maintenance',
+        html: `${data.message || 'Situs sedang dalam perbaikan.'}<br><br>Sisa waktu: <b>${countdownText}</b>`,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false,
+      });
+
+      // Optional: sembunyikan konten selama maintenance
+      document.body.innerHTML += '<style>#blogList, #searchInput, #categoryFilter, #loadMoreBtn { display: none; }</style>';
+    }
+  }
+});
+
