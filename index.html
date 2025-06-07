@@ -14,8 +14,24 @@
 
   <div class="container py-4" id="blogContainer">
     <h3 class="mb-4">Artikel Terbaru</h3>
+
+    <div class="row mb-3">
+      <div class="col-md-6 mb-2">
+        <input type="text" id="searchInput" class="form-control" placeholder="Cari blog..." />
+      </div>
+      <div class="col-md-6 mb-2">
+        <select id="categoryFilter" class="form-select">
+          <option value="">Semua Kategori</option>
+        </select>
+      </div>
+    </div>
+
     <div class="row" id="blogList">
       <p>Memuat blog...</p>
+    </div>
+
+    <div class="text-center mt-4">
+      <button id="loadMoreBtn" class="btn btn-outline-primary d-none">Load More</button>
     </div>
   </div>
 
