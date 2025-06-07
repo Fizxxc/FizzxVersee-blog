@@ -22,18 +22,26 @@
   <div class="container py-4">
     <h3 class="mb-4">Tambah Blog Baru</h3>
 
-    <form id="blogForm" class="mb-4">
-      <input type="hidden" id="blogId" />
-      <div class="mb-3">
-        <label for="title" class="form-label">Judul</label>
-        <input type="text" id="title" class="form-control" placeholder="Masukkan judul blog" required />
-      </div>
-      <div class="mb-3">
-        <label for="content" class="form-label">Isi Konten</label>
-        <textarea id="content" class="form-control" rows="6" placeholder="Masukkan isi blog" required></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">Simpan Blog</button>
-    </form>
+   <form id="blogForm" class="mb-4">
+  <input type="hidden" id="blogId" />
+  <div class="mb-3">
+    <label for="title" class="form-label">Judul</label>
+    <input type="text" id="title" class="form-control" placeholder="Masukkan judul blog" required />
+  </div>
+  <div class="mb-3">
+    <label for="category" class="form-label">Kategori / Tag (pisahkan dengan koma)</label>
+    <input type="text" id="category" class="form-control" placeholder="Contoh: teknologi, edukasi" />
+  </div>
+  <div class="mb-3">
+    <label for="link" class="form-label">Link (opsional)</label>
+    <input type="url" id="link" class="form-control" placeholder="https://contoh.com/artikel" />
+  </div>
+  <div class="mb-3">
+    <label for="content" class="form-label">Isi Konten</label>
+    <textarea id="content" class="form-control" rows="6" placeholder="Masukkan isi blog" required></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Simpan Blog</button>
+</form>
 
     <hr />
     <h4 class="mb-3">Daftar Blog</h4>
