@@ -111,26 +111,50 @@ onValue(ref(db, 'maintenance'), (snapshot) => {
   if (data && data.status === true) {
     const now = Date.now();
     if (now < data.endTime) {
-      const timeLeft = data.endTime - now;
-      const seconds = Math.floor((timeLeft / 1000) % 60);
-      const minutes = Math.floor((timeLeft / 1000 / 60) % 60);
-      const hours = Math.floor((timeLeft / 1000 / 60 / 60) % 24);
-      const days = Math.floor((timeLeft / 1000 / 60 / 60 / 24));
+      // Hitung waktu tersisa untuk countdown
+      const updateCountdown = () => {
+        const nowInner = Date.now();
+        const timeLeft = data.endTime - nowInner;
 
-      const countdownText = `${days} hari, ${hours} jam, ${minutes} menit, ${seconds} detik`;
+        if (timeLeft <= 0) {
+          Swal.close();
+          // Tampilkan kembali konten
+          document.querySelectorAll('#blogList, #searchInput, #categoryFilter, #loadMoreBtn').forEach(el => {
+            el.style.display = '';
+          });
+          clearInterval(intervalId);
+          return;
+        }
+
+        const seconds = Math.floor((timeLeft / 1000) % 60);
+        const minutes = Math.floor((timeLeft / 1000 / 60) % 60);
+        const hours = Math.floor((timeLeft / 1000 / 60 / 60) % 24);
+        const days = Math.floor((timeLeft / 1000 / 60 / 60 / 24));
+
+        const countdownText = `${days} hari, ${hours} jam, ${minutes} menit, ${seconds} detik`;
+
+        Swal.update({
+          html: `${data.message || 'Situs sedang dalam perbaikan.'}<br><br>Sisa waktu: <b>${countdownText}</b>`
+        });
+      };
 
       Swal.fire({
         icon: 'info',
         title: 'Maintenance',
-        html: `${data.message || 'Situs sedang dalam perbaikan.'}<br><br>Sisa waktu: <b>${countdownText}</b>`,
+        html: `${data.message || 'Situs sedang dalam perbaikan.'}<br><br>Sisa waktu: <b>Loading...</b>`,
         allowOutsideClick: false,
         allowEscapeKey: false,
         showConfirmButton: false,
       });
 
-      // Optional: sembunyikan konten selama maintenance
-      document.body.innerHTML += '<style>#blogList, #searchInput, #categoryFilter, #loadMoreBtn { display: none; }</style>';
+      // Sembunyikan konten selama maintenance
+      document.querySelectorAll('#blogList, #searchInput, #categoryFilter, #loadMoreBtn').forEach(el => {
+        el.style.display = 'none';
+      });
+
+      // Mulai interval update countdown setiap detik
+      const intervalId = setInterval(updateCountdown, 1000);
+      updateCountdown();
     }
   }
 });
-
