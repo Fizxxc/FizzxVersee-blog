@@ -84,7 +84,7 @@ const loadBlogs = () => {
 
         item.innerHTML = `
           <h5>${blog.title}</h5>
-          ${blog.categories ? `<small class="text-muted">Kategori: ${blog.categories}</small><br>` : ''}
+          ${blog.category ? `<small class="text-muted">Kategori: ${blog.category}</small><br>` : ''}
           ${blog.link ? `<a href="${blog.link}" target="_blank">Kunjungi Link</a><br>` : ''}
           <p>${blog.content}</p>
           <div class="d-flex gap-2">
