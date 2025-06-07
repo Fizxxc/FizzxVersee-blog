@@ -19,13 +19,14 @@ const categoryInput = document.getElementById('category');
 const linkInput = document.getElementById('link');
 const blogIdInput = document.getElementById('blogId');
 const blogList = document.getElementById('blogList');
+const blogForm = document.getElementById('blogForm'); // pastikan ini ada
 
 // Tambah/Edit Blog
 blogForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const title = titleInput.value.trim();
   const content = contentInput.value.trim();
-  const categories = categoryInput.value.trim();
+  const category = categoryInput.value.trim();
   const link = linkInput.value.trim();
   const blogId = blogIdInput.value;
 
@@ -37,7 +38,7 @@ blogForm.addEventListener('submit', async (e) => {
   const blogData = {
     title,
     content,
-    category,
+    category, // gunakan field "category"
     link,
     timestamp: Date.now()
   };
@@ -65,7 +66,7 @@ blogForm.addEventListener('submit', async (e) => {
   }
 });
 
-// Tampilkan Blog (tambah tampilan kategori dan link jika ada)
+// Tampilkan Blog
 const loadBlogs = () => {
   onValue(ref(db, 'blogs'), (snapshot) => {
     blogList.innerHTML = '';
@@ -96,7 +97,7 @@ const loadBlogs = () => {
         item.querySelector('.editBtn').onclick = () => {
           titleInput.value = blog.title;
           contentInput.value = blog.content;
-          categoryInput.value = blog.categories || '';
+          categoryInput.value = blog.category || ''; // konsisten
           linkInput.value = blog.link || '';
           blogIdInput.value = id;
           window.scrollTo({ top: 0, behavior: 'smooth' });
